@@ -51,8 +51,23 @@ $arWaterMark = Array(
        "file" => $_SERVER["DOCUMENT_ROOT"].'/upload/copy.png', // Путь к картинке
        "fill" => "exact",
    )
+
+/* Если картинка выводится CFile::GetPath*/
+   $img_slide = [
+    'ID' => // Здесь вставляем путь к картинке которую нужно зарезайзить как пример вот --> $arElement["DETAIL_PICTURE"],
+    'SRC' => CFile::GetPath(// Здесь вставляем путь к картинке),
+    'WIDTH' => '',
+    'HEIGHT' => ''
+];
+/* Если картинка выводится CFile::GetPath*/
+
 );
-$arFileTmp = CFile::ResizeImageGet(
+/* Если картинка выводится CFile::GetPath*/
+$imgWatermark = CFile::ResizeImageGet($img_slide['ID'], array('width' => $img_slide['WIDTH'], 'height' => $img_slide['HEIGHT']), BX_RESIZE_IMAGE_EXACT, false, $watermarkOne, false, 100)['src'];
+ /* Если картинка выводится CFile::GetPath*/
+
+
+ $arFileTmp = CFile::ResizeImageGet(
 // Здесь вставляем путь к картинке которую нужно зарезайзить как пример вот --> $arElement["DETAIL_PICTURE"],
    array("width" => 250, "height" => 127),
    BX_RESIZE_IMAGE_EXACT,
