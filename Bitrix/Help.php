@@ -3,7 +3,7 @@
 global $USER;
 if($USER -> IsAdmin()){
     echo('<pre>');
-    print_r($yourArray);wadawц
+    print_r($yourArray);wadawцы
 }
 ?>
 <!-- Вывод масива, только для админа -->
