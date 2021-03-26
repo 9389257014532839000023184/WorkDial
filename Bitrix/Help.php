@@ -8,6 +8,8 @@ if($USER -> IsAdmin()){
 ?>
 <!-- Вывод масива, только для админа -->
 
+<!-- ======================================================================= -->
+
 <!-- Получение пользовательских свойств раздела -->
 <?$fSections = CIBlockSection::GetList(
     false,
@@ -22,6 +24,7 @@ if($USER -> IsAdmin()){
 ?>
 <!-- Получение пользовательских свойств раздела -->
 
+<!-- ======================================================================= -->
 
 <!-- Получение id раздела по вложености -->
 <?
@@ -39,6 +42,8 @@ $ROOT_SECTION_ID = $arGrp['ID'];
 }
 ?>
 <!-- Получение id раздела по вложености -->
+
+<!-- ======================================================================= -->
 
 <!-- Наложение вотермарик на уже загруженные картинки -->
 <?
@@ -76,3 +81,38 @@ $imgWatermark = CFile::ResizeImageGet($img_slide['ID'], array('width' => $img_sl
 );
 ?>
 <!-- Наложение вотермарик на уже загруженные картинки -->
+
+<!-- ======================================================================= -->
+
+<!-- Добавление тега canonical для пагинации -->
+<?
+//Добавляем этот код в bitrix/php_interface/init.php
+AddEventHandler('main', 'OnEpilog' , array('CMainPager', 'OnEpilogHandler'));
+class CMainPager {
+    public static function OnEpilogHandler() {
+       if (isset($_GET['PAGEN_1']) && intval($_GET['PAGEN_1'])>0)
+       {
+           $title = $GLOBALS['APPLICATION']->GetPageProperty("title");
+           $GLOBALS['APPLICATION']->SetPageProperty('title', $title.' – Страница '.intval($_GET['PAGEN_1']));
+           $description = $GLOBALS['APPLICATION']->GetProperty("description");
+           $GLOBALS['APPLICATION']->SetPageProperty('description', $description.' – Страница '.intval($_GET['PAGEN_1']));
+           global $APPLICATION;
+           $APPLICATION->AddHeadString('<li nk href="https://'.$_SERVER['HTTP_HOST'].$APPLICATION->sDirPath.'" rel="canonical" />',true);
+
+       }
+       elseif (isset($_GET['PAGEN_2']) && intval($_GET['PAGEN_2'])>0)
+       {
+           $title = $GLOBALS['APPLICATION']->GetPageProperty("title");
+           $GLOBALS['APPLICATION']->SetPageProperty('title', $title.' – Страница '.intval($_GET['PAGEN_2']));
+           $description = $GLOBALS['APPLICATION']->GetProperty("description");
+           $GLOBALS['APPLICATION']->SetPageProperty('description', $description.' – Страница '.intval($_GET['PAGEN_2']));
+           global $APPLICATION;
+           $APPLICATION->AddHeadString('<li nk href="https://'.$_SERVER['HTTP_HOST'].$APPLICATION->sDirPath.'" rel="canonical" />',true);
+
+       }
+   }
+}
+?>
+<!-- Добавление тега canonical для пагинации -->
+
+<!-- ======================================================================= -->
