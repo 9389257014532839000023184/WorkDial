@@ -22,3 +22,20 @@ if($USER -> IsAdmin()){
 ?>
 <!-- Получение пользовательских свойств раздела -->
 
+
+<!-- Получение id раздела по вложености -->
+<?
+$scRes = CIBlockSection::GetNavChain(
+    $arResult['IBLOCK_ID'],
+    $arResult['IBLOCK_SECTION_ID'],
+    array("ID","DEPTH_LEVEL")
+);
+$ROOT_SECTION_ID = 0;
+while($arGrp = $scRes->Fetch()){
+// определяем корневой раздел
+if ($arGrp['DEPTH_LEVEL'] == 1){
+$ROOT_SECTION_ID = $arGrp['ID'];
+}
+}
+?>
+<!-- Получение id раздела по вложености -->
